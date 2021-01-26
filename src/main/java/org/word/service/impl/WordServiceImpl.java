@@ -232,8 +232,6 @@ public class WordServiceImpl implements WordService {
      * @return
      */
     private List<ResponseModelAttr> processResponseModelAttrs(Map<String, Object> responseObj, Map<String, Object> definitinMap) {
-
-        final Map<String, Object> def=definitinMap;
         List<ResponseModelAttr> attrList = new ArrayList<>();
         Map<String, Object> schema = (Map<String, Object>) responseObj.get("schema");
         String type = (String) schema.get("type");
@@ -254,14 +252,15 @@ public class WordServiceImpl implements WordService {
         }
 
         if (StringUtils.isNotBlank(ref)) {
-            Map<String, Object> mode = (Map<String, Object>) def.get(ref);
-
-            ResponseModelAttr attr = new ResponseModelAttr();
-            attr.setClassName((String) mode.get("title"));
-            attr.setName((String) mode.get("description"));
-            attr.setType(StringUtils.defaultIfBlank(type, StringUtils.EMPTY));
-            attrList.add(attr);
-            attrList.addAll((ArrayList<ResponseModelAttr>) mode.get("properties"));
+            Map<String, Object> mode = (Map<String, Object>) definitinMap.get(ref);
+            if (mode!=null){
+                ResponseModelAttr attr = new ResponseModelAttr();
+                attr.setClassName((String) mode.get("title"));
+                attr.setName((String) mode.get("description"));
+                attr.setType(StringUtils.defaultIfBlank(type, StringUtils.EMPTY));
+                attrList.add(attr);
+                attrList.addAll((ArrayList<ResponseModelAttr>) mode.get("properties"));
+            }
         }
         Iterator<ResponseModelAttr> iterator = attrList.iterator();
         while (iterator.hasNext()){
