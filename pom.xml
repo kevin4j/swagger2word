@@ -73,6 +73,11 @@
             <artifactId>EasyRest</artifactId>
             <version>1.5.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.2.3</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>Swagger2Word</finalName>
